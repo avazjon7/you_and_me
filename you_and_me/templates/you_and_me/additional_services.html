@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Services</title>
+</head>
+<body>
+    <h1>Additional Services</h1>
+
+    <ul>
+        {% for service in additional_services %}
+            <li><a href="{% url 'additional_service_detail' service.id %}">{{ service.name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

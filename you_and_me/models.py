@@ -151,3 +151,31 @@ class GroomAttire(models.Model):
 
     def __str__(self):
         return self.category
+
+
+from django.db import models
+
+# Main category for Additional Services (e.g., Honeymoon, Cakes, etc.)
+class AdditionalServiceCategory(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class AdditionalServiceSubcategory(models.Model):
+    category = models.ForeignKey(AdditionalServiceCategory, on_delete=models.CASCADE, related_name='subcategories')
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+    def create_additional_services(self):
+        honeymoon = AdditionalServiceCategory.objects.create(name="Honeymoon")
+        cakes = AdditionalServiceCategory.objects.create(name="Cakes")
+        registry_office = AdditionalServiceCategory.objects.create(name="Registry Office")
+        collection = AdditionalServiceCategory.objects.create(name="Collection")
+        AdditionalServiceSubcategory.objects.create(category=collection, name="Drinks")
+        AdditionalServiceSubcategory.objects.create(category=collection, name="Fruits")
+        AdditionalServiceSubcategory.objects.create(category=collection, name="Perfumes")
+        AdditionalServiceSubcategory.objects.create(category=collection, name="Sweets")

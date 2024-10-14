@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404
 from .models import Bride, Groom, UniversalCategory, UniversalSubcategory, UniversalSubSubcategory
+from django.shortcuts import render, get_object_or_404
+from .models import AdditionalServiceCategory, AdditionalServiceSubcategory
 
-# Home page view - Shows all main categories
 def home(request):
     brides = Bride.objects.all()
     grooms = Groom.objects.all()
@@ -59,4 +59,20 @@ def universal_subcategory_detail(request, subcategory_id):
     return render(request, 'you_and_me/universal_subcategory_detail.html', {
         'subcategory': subcategory,
         'sub_subcategories': sub_subcategories,
+    })
+
+def additional_services(request):
+    additional_services = AdditionalServiceCategory.objects.all()
+    return render(request, 'you_and_me/additional_services.html', {
+        'additional_services': additional_services,
+    })
+
+# View to display details of a specific Additional Service category and its subcategories
+def additional_service_detail(request, category_id):
+    category = get_object_or_404(AdditionalServiceCategory, id=category_id)
+    subcategories = category.subcategories.all()
+
+    return render(request, 'you_and_me/additional_service_detail.html', {
+        'category': category,
+        'subcategories': subcategories,
     })
