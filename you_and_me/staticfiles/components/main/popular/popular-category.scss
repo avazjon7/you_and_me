@@ -1,0 +1,36 @@
+.popular {
+  padding: 30px 0;
+  &-title {
+    margin-bottom: 40px;
+    text-align: center;
+    text-transform: capitalize;
+    @include heading(40px);
+  }
+  &-btn {
+    width: 100%;
+    max-width: 1296px;
+    text-align: right;
+    margin: 0 auto;
+    @media (max-width: 1296px) {
+      padding: 0 20px;
+      text-align: center;
+    }
+  }
+  &-categories {
+    &__item {
+      margin-bottom: 30px;
+      border-radius: 5px;
+      &-img {
+        border-radius: 5px;
+        width: 100%;
+        height: auto;
+        margin-bottom: 5px;
+      }
+      &-title {
+        color: $black;
+        text-align: center;
+        @include heading(24px);
+      }
+    }
+  }
+}

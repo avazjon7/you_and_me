@@ -1,0 +1,23 @@
+.header {
+  position: relative;
+  @import "./header-top";
+  @import "./header-content";
+  @import "./header-bottom";
+  @import "./header-category";
+}
+
+.category-focused {
+  .header-bottom {
+    .header-category__btn {
+      .unm-icon {
+        transform: rotate(540deg);
+      }
+    }
+  }
+  .category {
+    transform: scaleY(1);
+    .container {
+      transform: scaleY(1);
+    }
+  }
+}

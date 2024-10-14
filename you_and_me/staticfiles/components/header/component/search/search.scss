@@ -1,0 +1,106 @@
+@import "../../../../assets/styles/mixins";
+@import "../../../../assets/styles/variables";
+
+.header-search {
+  position: relative;
+  max-width: 636px;
+  width: 100%;
+  max-height: 50px;
+  height: 100%;
+
+  @media (max-width: 960px) {
+    max-width: 500px;
+  }
+
+  &__input {
+    width: 100%;
+    height: 100%;
+
+    label {
+      user-select: none;
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      color: $darkgrey;
+      cursor: text;
+      transform: translateY(-50%);
+      transition: all 0.3s ease;
+
+      @include text(16px);
+
+      &.search-focused {
+        top: 10px;
+        font-size: 10px;
+      }
+    }
+
+    input {
+      width: 100%;
+      height: 100%;
+      color: $primary;
+      padding: 15px 10px 15px 15px;
+      background-color: $soft-pink;
+      border: none;
+      border-bottom: 1px solid $primary;
+      border-radius: 3px;
+
+      @include text(16px);
+
+      &.search-focused {
+        background-color: $pink;
+
+        & + .unm-icon {
+          background-color: $pink;
+        }
+      }
+    }
+    .search-btn {
+      position: absolute;
+      top: 50%;
+      cursor: text;
+      transform: translateY(-50%);
+      right: 10px;
+      background-color: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+  }
+  &__content {
+    width: 100%;
+    height: auto;
+    background-color: $white;
+    padding: 5px 15px 10px;
+    border: 1px solid $light-grey;
+    border-radius: 0 0 3px 3px;
+    transform: scaleY(0);
+    transition: all 0.3s ease;
+    transform-origin: 0 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+
+    h2 {
+      color: $primary;
+      padding-bottom: 5px;
+      @include text(16px);
+    }
+    a {
+      color: $darkgrey;
+      margin-bottom: 5px;
+      @include text();
+      @include flexbox(center, flex-start);
+
+      .unm-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+      }
+    }
+
+    &.search-focused {
+      transform: scaleY(1);
+    }
+  }
+}

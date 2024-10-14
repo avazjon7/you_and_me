@@ -1,0 +1,61 @@
+.header-content {
+  border-bottom: 1px solid rgba($color: #000000, $alpha: 0.25);
+
+  .container {
+    padding: 20px 0;
+    gap: 0 20px;
+    @include flexbox();
+    @media (max-width: 1296px) {
+      padding: 20px;
+    }
+  }
+
+  &__logo {
+    img {
+      max-width: 100px;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+.header-content__liked {
+  position: relative;
+  .unm-icon {
+    &:hover path {
+      fill: $soft-pink;
+    }
+    &:active path {
+      stroke: $primary;
+      fill: $pink;
+    }
+  }
+  #liked-count {
+    position: absolute;
+    right: -10px;
+    top: -5px;
+    background-color: rgba($red, $alpha: 0.8);
+    width: 18px;
+    height: 18px;
+    color: $white;
+    border-radius: 50%;
+    z-index: 1;
+    transform: scale(0);
+    transition: all 0.3s ease;
+
+    &.liked {
+      transform: scale(1);
+    }
+
+    @include text(10px);
+    @include flexbox(center, center);
+  }
+}
+
+@media (max-width: 670px) {
+  .header-content {
+    .header-search,
+    &__liked {
+      display: none;
+    }
+  }
+}

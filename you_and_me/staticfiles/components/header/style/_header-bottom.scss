@@ -1,0 +1,123 @@
+.header-bottom {
+  color: $white;
+
+  .container {
+    padding: 15px 0;
+
+    @include flexbox();
+
+    @media (max-width: 1296px) {
+      padding: 15px 20px;
+    }
+  }
+
+  .header-category__btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: $white;
+
+    @include flexbox(center, center);
+    @include text(16px);
+
+    .unm-icon {
+      width: 27px;
+      height: 27px;
+      transition: all 0.3s ease;
+      margin-left: 5px;
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+      path {
+        stroke: $white;
+        fill: $white;
+      }
+    }
+  }
+
+  .header-menu {
+    ul {
+      flex-wrap: wrap;
+      gap: 0 35px;
+      @include flexbox();
+      
+      li {
+        list-style-type: none;
+        @include text(16px);
+
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+        a {
+          color: $white;
+          position: relative;
+          &::after {
+            content: "";
+            width: 0;
+            height: 2px;
+            background: $white;
+            position: absolute;
+            left: 0;
+            top: 150%;
+            transition: all 0.3s ease;
+          }
+
+          &:hover::after {
+            top: 110%;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 670px) {
+  .header-bottom {
+    position: relative;
+    .header-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 99;
+      background-color: $white;
+      color: $black;
+      width: 100%;
+      box-shadow: 2px 0 5px rgba($black, $alpha: 0.4);
+      transform: scaleY(0);
+      transition: all 0.3s ease;
+      transform-origin: top;
+      &.menu-active {
+        transform: scaleY(1);
+      }
+      ul {
+        flex-direction: column;
+        text-align: center;
+        li {
+          margin: 0;
+          border-bottom: 1px solid $silver;
+          width: 100%;
+          a {
+            padding: 15px 10px;
+            width: 100%;
+            display: block;
+            color: $primary;
+            &:hover {
+              background-color: $soft-pink;
+            }
+            &::after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+    .header-burger {
+      display: flex;
+    }
+  }
+}

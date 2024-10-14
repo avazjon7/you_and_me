@@ -1,0 +1,54 @@
+.header-top {
+  .container {
+    padding: 15px 0;
+
+    flex-wrap: wrap;
+    gap: 20px;
+    @include flexbox();
+
+    @media (max-width: 1296px) {
+      padding: 15px 20px;
+    }
+
+    @media (max-width: 670px) {
+      display: none;
+
+      .item {
+        flex-basis: calc(
+          50% - 20px
+        );
+      }
+    }
+  }
+}
+.header-top__link {
+  &:hover {
+    text-decoration: underline;
+  }
+  &:not(.language-select),
+  .user-auth {
+    @include text();
+    @include flexbox(center, flex-start);
+    .unm-icon {
+      margin-right: 5px;
+    }
+  }
+}
+
+.user-auth {
+  gap: 0 10px;
+  @include flexbox(center, flex-start);
+  &__link {
+    text-wrap: nowrap;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+  &__line {
+    width: 2px;
+    height: 23px;
+    background-color: $black;
+    border-radius: 5px;
+  }
+}

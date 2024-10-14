@@ -1,0 +1,169 @@
+.trend {
+  &-title {
+    color: $black;
+    max-width: 1296px;
+    width: 100%;
+    margin: 20px auto 5px;
+    @include heading(24px);
+    @media (max-width: 1296px) {
+      padding: 0 20px;
+    }
+  }
+  &-list {
+    max-width: 306px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    @media (max-width: 960px) {
+      max-width: 100%;
+    }
+
+    li {
+      width: 100%;
+      height: auto;
+      list-style-type: none;
+
+      a {
+        padding: 12px 10px;
+        display: block;
+        color: $black;
+        border: 1px solid $light-grey;
+        background-color: $white;
+        transition: all 0.3s ease;
+
+        @include text(16px);
+
+        &:hover {
+          background-color: $ghost-white;
+        }
+      }
+      &:not(:first-child) {
+        a {
+          border-top: none;
+        }
+      }
+      &:first-child {
+        a {
+          border-radius: 5px 5px 0 0;
+        }
+      }
+      &:last-child {
+        a {
+          border-radius: 0 0 5px 5px;
+        }
+      }
+    }
+  }
+  &-slide {
+    max-width: 966px;
+    width: 100%;
+    height: 396px;
+    z-index: 900;
+    overflow: hidden;
+    position: relative;
+    border-radius: 5px;
+    @media (max-width: 960px) {
+      display: none;
+      position: static;
+    }
+
+    &__item {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      top: 100%;
+      transition: all 0.3s ease;
+
+      &.active-slide {
+        top: 0;
+      }
+      .slide-item__effect {
+        width: 100%;
+        height: 100%;
+        background-color: rgba($black, $alpha: 0.3);
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+      }
+      .slide-content {
+        position: absolute;
+        top: 0;
+        left: 110px;
+        z-index: 3;
+        height: 100%;
+        max-width: 300px;
+        flex-direction: column;
+        text-transform: capitalize;
+        padding: 50px 0;
+        @include flexbox(flex-start, space-between);
+        &__title {
+          color: $white;
+          @include heading(40px, "o");
+        }
+      }
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        z-index: 1;
+        object-fit: cover;
+
+        @media (max-width: 1100px) {
+          height: 100%;
+        }
+      }
+    }
+    .slide-btns {
+      position: absolute;
+      top: 0;
+      right: 40px;
+      z-index: 4;
+      padding: 40px 0;
+      height: 100%;
+      flex-direction: column;
+      @include flexbox();
+      &__dots {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px 0;
+        @include flexbox();
+        
+        &-item {
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background-color: rgba($light-grey, $alpha: 0.5);
+          border: 0;
+          cursor: pointer;
+          &.active-dot {
+            background-color: $white;
+          }
+        }
+      }
+      .arrow-prev,
+      .arrow-next {
+        background-color: transparent;
+        border: 0;
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        .unm-icon {
+          width: 50px;
+          height: 50px;
+          svg {
+            width: 100%;
+            height: 100%;
+            fill: $white;
+            stroke: $white;
+            path {
+              fill: $white;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,105 @@
+footer {
+  background-color: #1b1b1b;
+  color: $white;
+  padding: 40px 0 50px;
+
+  .help-title,
+  .footer-left__title,
+  .footer-categories-title,
+  .company-title {
+    margin-bottom: 30px;
+    color: $white;
+    display: block;
+    @include heading(32px, "o");
+  }
+  .footer-left {
+    &__desc {
+      color: $white;
+      width: 70%;
+      margin-bottom: 30px;
+      @include text(16px);
+    }
+    &__form {
+      position: relative;
+      gap: 0 25px;
+      @include flexbox(center, flex-start);
+      label[for="email"] {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        color: $white;
+        transform: translateY(-50%);
+        cursor: text;
+        transition: all 0.3s ease;
+        @include text(16px);
+        &.input-active {
+          top: 5px;
+          @include text(14px);
+        }
+      }
+      input[type="email"] {
+        height: 100%;
+        background-color: transparent;
+        padding: 8px 0 5px 5px;
+        border: 0;
+        border-bottom: 3px solid $white;
+        max-width: 415px;
+        width: 100%;
+        display: block;
+        color: $white;
+        @include text(16px);
+      }
+    }
+  }
+  .help {
+    p {
+      margin-bottom: 10px;
+      color: $white;
+      @include text(16px);
+
+      a {
+        text-decoration: underline;
+      }
+    }
+    &-socials {
+      gap: 0 20px;
+      @include flexbox(center, flex-start);
+      a {
+        i svg {
+          width: 24px;
+          height: 24px;
+          path {
+            stroke: $white;
+          }
+        }
+      }
+    }
+  }
+  .footer-menu {
+    margin-top: 40px;
+    gap: 0 40px;
+    @include flexbox(flex-start, flex-start);
+    .footer-categories {
+      &-menu {
+        flex-direction: column;
+        gap: 20px;
+        @include flexbox(flex-start, flex-start);
+        li {
+          list-style-type: none;
+          a {
+            color: $darkgrey;
+            transition: all 0.3s ease;
+            &:hover {
+              color: $white;
+            }
+          }
+        }
+      }
+    }
+    .company {
+      &-menu {
+        @extend .footer-categories-menu;
+      }
+    }
+  }
+}

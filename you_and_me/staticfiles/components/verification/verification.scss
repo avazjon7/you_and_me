@@ -1,0 +1,30 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
+.verification {
+    .form {
+        .form-desc {
+            text-align: center;
+            margin-bottom: 15px;
+            @include heading(16px);
+            .primary {
+                color: $primary;
+            }
+        }
+        .input-box {
+            .input-row {
+                justify-content: center;
+                .input {
+                    max-width: 50px;
+                    input {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        .userLinks {
+            margin-bottom: 15px;
+        }
+        
+    }
+}

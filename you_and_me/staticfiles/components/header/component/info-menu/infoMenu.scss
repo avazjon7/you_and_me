@@ -1,0 +1,88 @@
+@import "../../../../assets/styles/mixins";
+@import "../../../../assets/styles/variables";
+
+.info-menu {
+  position: fixed;
+  right: -100%;
+  top: 0;
+  width: 80%;
+  padding: 20px;
+  background-color: $white;
+  height: 100vh;
+  z-index: 999;
+  box-shadow: 0 0 10px rgba($black, $alpha: 0.6);
+  transition: all 0.3s ease;
+  &__top {
+    margin-bottom: 30px;
+    @include flexbox();
+  }
+  &__liked {
+    position: relative;
+    gap: 5px;
+    padding: 10px 15px;
+    margin-top: 20px;
+    @include flexbox(center, center);
+    @include heading(16px);
+    span {
+      color: $primary;
+    }
+    .unm-icon {
+      path {
+        stroke: $primary;
+      }
+    }
+  }
+  .become-merchant {
+    @extend .info-menu__liked;
+    .unm-icon path {
+      stroke: $white;
+    }
+  }
+  .info-menu__contact {
+    width: 100%;
+    height: auto;
+    margin: 20px 0;
+    color: $black;
+    @include flexbox();
+    .telegram {
+      font-size: calc(100% - 4px);
+      gap: 5px;
+      @include flexbox(center, flex-start);
+    }
+    .phone {
+      @extend .telegram;
+    }
+  }
+  &.info-active {
+    @media (max-width: 670px) {
+      right: 0;
+      .close-btn {
+        div {
+          &:first-child {
+            animation: open-info-first 0.3s ease 300ms normal;
+          }
+          &:last-child {
+            animation: open-info-second 0.3s ease 300ms normal;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes open-info-first {
+  from {
+    transform: rotate(50deg) translate(-5px, -3px);
+  }
+  to {
+    transform: rotate(45deg) translate(-5px, -3px);
+  }
+}
+@keyframes open-info-second {
+  from {
+    transform: rotate(-30deg) translate(5px, -8px);
+  }
+  to {
+    transform: rotate(-45deg) translate(5px, -8px);
+  }
+}

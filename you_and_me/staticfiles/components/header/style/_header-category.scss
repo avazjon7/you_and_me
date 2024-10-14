@@ -1,0 +1,157 @@
+$cat-height: 450px;
+
+.category {
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  height: $cat-height;
+  background-color: $white;
+  z-index: 999999;
+  transform-origin: center top;
+  overflow: hidden;
+  transform: scaleY(0);
+  transition: all 0.3s ease;
+  border-bottom: 1px solid $silver;
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  &-top,
+  &-box {
+    display: none;
+  }
+  &-list {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    @include flexbox(flex-start, flex-start);
+    &:last-child {
+      flex-direction: row;
+      gap: 15px;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      a {
+        flex-direction: column;
+        @include flexbox();
+        .category-item__img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+      }
+    }
+    .category-item {
+      width: 100%;
+      padding: 5px 10px;
+      text-transform: capitalize;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      @include text(16px);
+      @include flexbox();
+      .unm-icon {
+        transition: all 0.3s ease;
+        transform: scale(0);
+      }
+      &.selected,
+      &:hover {
+        background-color: rgba($light-grey, $alpha: 0.5);
+        .unm-icon {
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .category {
+    position: fixed;
+    height: 100vh;
+    padding: 20px;
+    top: 0;
+    transform-origin: left top;
+
+    .container {
+      display: block;
+    }
+
+    .category-list {
+      display: none;
+    }
+
+    &-top {
+      gap: 0 5px;
+      color: $primary;
+      margin-bottom: 20px;
+      @include flexbox();
+      h3 {
+        width: 100%;
+      }
+      .unm-icon {
+        width: 19px;
+        height: 19px;
+        svg path {
+          stroke: $primary;
+        }
+      }
+      .category-back {
+        border: 0;
+        background-color: transparent;
+        color: $primary;
+        width: auto;
+        @include flexbox(center, flex-start);
+      }
+      button.close-category {
+        border: 0;
+        background-color: transparent;
+        color: $primary;
+        @include text(18px);
+      }
+    }
+    &-box {
+      gap: 15px;
+      flex-direction: column;
+      height: 90lvh;
+      overflow: scroll;
+      @include flexbox(flex-start, flex-start);
+      .category-item {
+        gap: 10px;
+        background-color: $soft-pink;
+        width: 100%;
+        padding: 20px 10px;
+        border-radius: 5px;
+        @include flexbox(center, flex-start);
+        img {
+          height: 60px;
+          width: 60px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 1px solid $silver;
+          background-color: $white;
+        }
+        &__content {
+          width: 100%;
+          gap: 3px;
+          flex-direction: column;
+          @include flexbox(flex-start, flex-start);
+          h4 {
+            text-transform: capitalize;
+            width: 100%;
+            @include heading(18px);
+          }
+        }
+        .unm-icon {
+          width: 40px;
+          height: 40px;
+        }
+        &:first-child {
+          .unm-icon {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+@import "../../assets/styles/mixins";
+@import "../../assets/styles/variables";
+
+.filter {
+  height: 100%;
+  color: $black;
+  &-title {
+    @include heading(24px);
+    margin-bottom: 5px;
+    text-transform: capitalize;
+  }
+  &-box {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid $light-grey;
+    padding: 0 8px;
+    .filter-menu {
+      &__item {
+        list-style-type: none;
+        &.filter-opened {
+          h5 {
+            border-bottom: 1px solid $light-grey;
+          }
+          .filter-list {
+            @include flexbox(flex-start, flex-start);
+          }
+        }
+        h5 {
+          width: 100%;
+          height: auto;
+          @include text(16px);
+          padding: 12px 4px;
+          border-top: 1px solid $light-grey;
+          cursor: pointer;
+        }
+        .filter-list {
+          padding: 5px 10px;
+          flex-direction: column;
+          display: none;
+          li {
+            list-style-type: none;
+            @include flexbox(center, flex-start);
+            gap: 5px;
+            * {
+              cursor: pointer;
+              user-select: none;
+            }
+            input[type="checkbox"] {
+              display: none;
+
+              &:checked + .checkbox {
+                background-image: url("../../assets/icons/check-square-fill.png");
+                background-position: center center;
+                background-size: cover;
+              }
+              &:checked ~ label {
+                color: $primary;
+              }
+            }
+            .checkbox {
+              width: 12px;
+              height: 12px;
+              border: 1px solid $primary;
+              border-radius: 3px;
+              transition: all 0.3s ease;
+              background-color: transparent;
+            }
+          }
+        }
+        &:first-child {
+          h5 {
+            border-top: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 670px) {
+  .filter {
+    max-width: 100%;
+    &-title {
+      text-align: center;
+    }
+  }
+}

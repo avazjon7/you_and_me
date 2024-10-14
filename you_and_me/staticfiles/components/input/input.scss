@@ -1,0 +1,150 @@
+@import "../../assets/styles/_mixins.scss";
+@import "../../assets/styles/_variables.scss";
+
+.input {
+  max-width: 470px;
+  width: 100%;
+  height: 50px;
+  position: relative;
+
+  * {
+    transition: all 0.3s ease;
+  }
+  &.error {
+      p.errorMsg {
+        position: absolute;
+        top: 100%;
+        color: $red;
+        z-index: 1;
+        display: block;
+    }
+    input {
+        border-color: $red;
+        background-color: $pink;
+    }
+  }
+  input {
+    display: block;
+    z-index: 1;
+    padding: 15px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: $soft-pink;
+    border: 0;
+    border-bottom: 1px solid $primary;
+    color: $darkgrey;
+    border-radius: 3px;
+    @include text(16px);
+  }
+  label {
+    cursor: text;
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: $darkgrey;
+    @include text(16px);
+    
+    span {
+      color: $red;
+    }
+  }
+  .unm-icon {
+    cursor: pointer;
+    display: none;
+    position: absolute;
+    z-index: 2;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    svg path {
+      fill: $darkgrey;
+    }
+  }
+  &.input-active {
+    label {
+      top: 4px;
+      transform: translateY(0);
+      @include text(12px);
+    }
+    input {
+        background-color: $pink;
+    }
+  }
+  .selector-data {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: auto;
+    transform: scaleY(0);
+    transform-origin: top center;
+    visibility: hidden;
+    flex-direction: column;
+    top: 100%;
+    li {
+      width: 100%;
+      cursor: pointer;
+      padding: 10px 15px;
+      color: $darkgrey;
+      border: 1px solid $darkgrey;
+      background-color: $white;
+      border-bottom: 0;
+      list-style-type: none;
+      text-transform: capitalize;
+      @include text(16px);
+
+      &:hover {
+        background-color: $ghost-white;
+      }
+
+      &:first-child {
+        border-radius: 5px 5px 0 0;
+      }
+      &:last-child {
+        border-bottom: 1px solid $darkgrey;
+        border-radius: 0 0 5px 5px;
+      }
+    }
+  }
+
+  &.selector {
+    * {
+      cursor: pointer;
+    }
+    .unm-icon {
+      display: block;
+    }
+    .selector-data {
+      z-index: 3;
+      p {
+        color: $red;
+        cursor: default;
+        padding: 10px 15px;
+        border: 1px solid $darkgrey;
+        border-radius: 5px;
+        width: 100%;
+        background-color: $white;
+      }
+    }
+    &.selector-active {
+      .selector-data {
+        visibility: visible;
+        transform: scaleY(1);
+        @include flexbox(flex-start, center);
+      }
+      .unm-icon {
+        transform: rotate(180deg) translateY(50%);
+      }
+    }
+  }
+  &.calendar {
+    .unm-icon {
+      display: block;
+      svg path {
+        fill: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+@import "../../assets/styles/mixins";
+@import "../../assets/styles/variables";
+
+.categories {
+  padding: 35px 0;
+  .container {
+    overflow: hidden;
+    gap: 35px 20px;
+    flex-wrap: wrap;
+    @include flexbox(flex-start, center);
+  }
+  &-item {
+    flex-direction: column;
+    max-width: 306px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    @include flexbox(center, center);
+    a {
+      img {
+        border-radius: 5px;
+        object-fit: cover;
+        width: 100%;
+      }
+      h4 {
+        @include heading(24px);
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+@mixin flexbox($items: center, $content: space-between) {
+  & {
+    display: flex;
+    align-items: $items;
+    justify-content: $content;
+  }
+}
+@mixin heading($font-size, $family: "Sen") {
+  & {
+    font-size: $font-size;
+    @if ($family == "o") {
+      font-family: "Overlock", sans-serif;
+    } @else {
+      font-family: "Sen", sans-serif;
+    }
+    font-weight: 700;
+  }
+}
+@mixin text($font-size: 14px, $family: "Sen") {
+  & {
+    font-size: $font-size;
+    @if ($family == "o") {
+      font-family: "Overlock", sans-serif;
+    } @else {
+      font-family: "Sen", sans-serif;
+    }
+    font-weight: 400;
+  }
+}
+
+@mixin userModals() {
+  width: 100%;
+  height: 100vh !important;
+  background-color: $pink;
+  flex-direction: column;
+  @include flexbox(center, center);
+}
