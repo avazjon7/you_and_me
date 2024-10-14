@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bride Detail</title>
+</head>
+<body>
+    <h1>{{ bride.name }}'s Details</h1>
+
+    <h2>Sarpo Items</h2>
+    <ul>
+    {% for sarpo in sarpos %}
+        <li>{{ sarpo.category }}</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Stylist Items</h2>
+    <ul>
+    {% for stylist in stylists %}
+        <li>{{ stylist.category }}</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Wedding Dresses</h2>
+    <ul>
+    {% for dress in wedding_dresses %}
+        <li>{{ dress.category }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

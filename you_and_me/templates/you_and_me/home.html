@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wedding Planner</title>
+</head>
+<body>
+    <h1>Wedding Categories</h1>
+
+    <h2>Bride</h2>
+    <ul>
+    {% for bride in brides %}
+        <li><a href="{% url 'bride_detail' bride.id %}">{{ bride.name }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <h2>Groom</h2>
+    <ul>
+    {% for groom in grooms %}
+        <li><a href="{% url 'groom_detail' groom.id %}">{{ groom.name }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <h2>Universal Categories</h2>
+    <ul>
+    {% for category in universal_categories %}
+        <li><a href="{% url 'universal_category_detail' category.id %}">{{ category.name }}</a></li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

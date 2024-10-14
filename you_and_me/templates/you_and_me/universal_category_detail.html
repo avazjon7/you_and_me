@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Universal Category Detail</title>
+</head>
+<body>
+    <h1>{{ category.name }}</h1>
+
+    <h2>Subcategories</h2>
+    <ul>
+    {% for subcategory in subcategories %}
+        <li><a href="{% url 'universal_subcategory_detail' subcategory.id %}">{{ subcategory.name }}</a></li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
