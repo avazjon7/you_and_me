@@ -16,8 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
+from you_and_me import views
+
+router = DefaultRouter()
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'universal-categories', views.UniversalCategoryViewSet)
+router.register(r'universal-subcategories', views.UniversalSubcategoryViewSet)
+router.register(r'universal-subsubcategories', views.UniversalSubSubcategoryViewSet)
+router.register(r'brides', views.BrideViewSet)
+router.register(r'grooms', views.GroomViewSet)
+router.register(r'additional-service-categories', views.AdditionalServiceCategoryViewSet)
+router.register(r'additional-service-subcategories', views.AdditionalServiceSubcategoryViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('you_and_me/', include('you_and_me.urls')),
+    path('api/', include(router.urls)),
+
 ]

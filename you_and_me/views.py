@@ -4,7 +4,14 @@ from .models import (
 )
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import AdditionalServiceCategoryForm, AdditionalServiceSubcategoryForm
+from rest_framework import viewsets
+from .serializers import (
+    CategorySerializer, UniversalCategorySerializer, UniversalSubcategorySerializer, UniversalSubSubcategorySerializer,
+    BrideSerializer, GroomSerializer, AdditionalServiceCategorySerializer, AdditionalServiceSubcategorySerializer
+)
+from .models import Category
 
+# Home view
 def home(request):
     brides = Bride.objects.all()
     grooms = Groom.objects.all()
@@ -104,3 +111,43 @@ def add_additional_service_subcategory(request):
         form = AdditionalServiceSubcategoryForm()
 
     return render(request, 'you_and_me/add_additional_service_subcategory.html', {'form': form})
+
+# ViewSets for API
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class UniversalCategoryViewSet(viewsets.ModelViewSet):
+    queryset = UniversalCategory.objects.all()
+    serializer_class = UniversalCategorySerializer
+
+
+class UniversalSubcategoryViewSet(viewsets.ModelViewSet):
+    queryset = UniversalSubcategory.objects.all()
+    serializer_class = UniversalSubcategorySerializer
+
+
+class UniversalSubSubcategoryViewSet(viewsets.ModelViewSet):
+    queryset = UniversalSubSubcategory.objects.all()
+    serializer_class = UniversalSubSubcategorySerializer
+
+
+class BrideViewSet(viewsets.ModelViewSet):
+    queryset = Bride.objects.all()
+    serializer_class = BrideSerializer
+
+
+class GroomViewSet(viewsets.ModelViewSet):
+    queryset = Groom.objects.all()
+    serializer_class = GroomSerializer
+
+
+class AdditionalServiceCategoryViewSet(viewsets.ModelViewSet):
+    queryset = AdditionalServiceCategory.objects.all()
+    serializer_class = AdditionalServiceCategorySerializer
+
+
+class AdditionalServiceSubcategoryViewSet(viewsets.ModelViewSet):
+    queryset = AdditionalServiceSubcategory.objects.all()
+    serializer_class = AdditionalServiceSubcategorySerializer

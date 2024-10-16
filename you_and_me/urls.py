@@ -1,5 +1,17 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
+
+# Создаём объект DefaultRouter
+router = DefaultRouter()
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'universal-categories', views.UniversalCategoryViewSet)
+router.register(r'universal-subcategories', views.UniversalSubcategoryViewSet)
+router.register(r'universal-subsubcategories', views.UniversalSubSubcategoryViewSet)
+router.register(r'brides', views.BrideViewSet)
+router.register(r'grooms', views.GroomViewSet)
+router.register(r'additional-service-categories', views.AdditionalServiceCategoryViewSet)
+router.register(r'additional-service-subcategories', views.AdditionalServiceSubcategoryViewSet)
 
 urlpatterns = [
     # Существующие URL
@@ -16,4 +28,7 @@ urlpatterns = [
     path('additional_services/add/', views.add_additional_service_category, name='add_additional_service_category'),
     path('additional_services/add_subcategory/', views.add_additional_service_subcategory,
          name='add_additional_service_subcategory'),
+
+    # URL для API
+    path('api/', include(router.urls)),
 ]
