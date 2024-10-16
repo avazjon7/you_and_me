@@ -1,6 +1,9 @@
-from .models import Bride, Groom, UniversalCategory, UniversalSubcategory, UniversalSubSubcategory
-from django.shortcuts import render, get_object_or_404
-from .models import AdditionalServiceCategory, AdditionalServiceSubcategory
+from .models import (
+    Bride, Groom, UniversalCategory, UniversalSubcategory, UniversalSubSubcategory,
+    AdditionalServiceCategory, AdditionalServiceSubcategory
+)
+from django.shortcuts import render, get_object_or_404, redirect
+from .forms import AdditionalServiceCategoryForm, AdditionalServiceSubcategoryForm
 
 def home(request):
     brides = Bride.objects.all()
@@ -41,7 +44,7 @@ def groom_detail(request, groom_id):
         'attires': attires,
     })
 
-
+# View for universal category details
 def universal_category_detail(request, category_id):
     category = get_object_or_404(UniversalCategory, id=category_id)
     subcategories = category.subcategories.all()
@@ -51,7 +54,7 @@ def universal_category_detail(request, category_id):
         'subcategories': subcategories,
     })
 
-
+# View for universal subcategory details
 def universal_subcategory_detail(request, subcategory_id):
     subcategory = get_object_or_404(UniversalSubcategory, id=subcategory_id)
     sub_subcategories = subcategory.sub_subcategories.all()
@@ -61,13 +64,14 @@ def universal_subcategory_detail(request, subcategory_id):
         'sub_subcategories': sub_subcategories,
     })
 
+# View for displaying all additional services
 def additional_services(request):
     additional_services = AdditionalServiceCategory.objects.all()
     return render(request, 'you_and_me/additional_services.html', {
         'additional_services': additional_services,
     })
 
-# View to display details of a specific Additional Service category and its subcategories
+# View for displaying additional service details
 def additional_service_detail(request, category_id):
     category = get_object_or_404(AdditionalServiceCategory, id=category_id)
     subcategories = category.subcategories.all()
@@ -76,3 +80,27 @@ def additional_service_detail(request, category_id):
         'category': category,
         'subcategories': subcategories,
     })
+
+# View to add a new additional service category
+def add_additional_service_category(request):
+    if request.method == 'POST':
+        form = AdditionalServiceCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('additional_services')
+    else:
+        form = AdditionalServiceCategoryForm()
+
+    return render(request, 'you_and_me/add_additional_service_category.html', {'form': form})
+
+# View to add a new additional service subcategory
+def add_additional_service_subcategory(request):
+    if request.method == 'POST':
+        form = AdditionalServiceSubcategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('additional_services')
+    else:
+        form = AdditionalServiceSubcategoryForm()
+
+    return render(request, 'you_and_me/add_additional_service_subcategory.html', {'form': form})
