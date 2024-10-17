@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import (
-    Category, UniversalCategory, UniversalSubcategory, UniversalSubSubcategory, Bride, Sarpo, Stylist, WeddingDress,
-    Groom, GroomEssentials, GroomStylist, GroomAttire, AdditionalServiceCategory, AdditionalServiceSubcategory
+    Category, UniversalCategory, UniversalSubcategory, UniversalSubSubcategory, Bride, Groom, AdditionalServiceCategory, AdditionalServiceSubcategory
 )
 
 class CategorySerializer(serializers.ModelSerializer):

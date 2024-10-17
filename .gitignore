@@ -1,0 +1,71 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+*.pyd
+
+# Django
+*.log
+*.pot
+*.py[cod]
+*\$py.class
+
+# Virtual Environments
+venv/
+.env
+.venv/
+ENV/
+env/
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Windows
+tumbs.db
+*.lnk
+
+# PyCharm
+*.iml
+.idea/
+
+# Database
+*.sqlite3
+
+# Media
+media/
+
+# Static files
+staticfiles/
+
+# Node modules
+node_modules/
+
+# Environments
+.env
+*.env
+
+# Migrations
+you_and_me/migrations/
+
+# Celery beat schedule files
+celerybeat-schedule
+
+# Test coverage reports
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.coverage
+.cache
+.pytest_cache
+
+# Django Swagger
+*.json
+*.yaml
