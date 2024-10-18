@@ -185,3 +185,40 @@ class AdditionalServiceSubcategory(models.Model):
         AdditionalServiceSubcategory.objects.create(category=collection, name="Fruits")
         AdditionalServiceSubcategory.objects.create(category=collection, name="Perfumes")
         AdditionalServiceSubcategory.objects.create(category=collection, name="Sweets")
+
+
+
+class Payment(models.Model):
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    transaction_id = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f"Payment {self.id} - {self.status}"
+
+# Updated Item model to fit with existing related models
+class Item(models.Model):
+    category = models.ForeignKey(UniversalCategory, on_delete=models.CASCADE, related_name='items', null=True, blank=True)
+    subcategory = models.ForeignKey(UniversalSubcategory, on_delete=models.CASCADE, related_name='items', null=True, blank=True)
+    sub_subcategory = models.ForeignKey(UniversalSubSubcategory, on_delete=models.CASCADE, related_name='items', null=True, blank=True)
+    name = models.CharField(max_length=100)
+    type = models.CharField(max_length=50)
+    product = models.CharField(max_length=50)
+    company_name = models.CharField(max_length=100)
+    company_status = models.CharField(max_length=50, choices=[('approved', 'Approved'), ('pending', 'Pending')])
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=10)
+    discount = models.PositiveIntegerField()
+    tag = models.CharField(max_length=50)
+    feedback_count = models.PositiveIntegerField()
+    feedback_rating = models.FloatField()
+    image = models.ImageField(upload_to='items/', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.product} ({self.company_name})"
+
+    class Meta:
+        verbose_name = "Item"
+        verbose_name_plural = "Items"

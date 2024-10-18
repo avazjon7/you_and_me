@@ -1,15 +1,25 @@
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import (
     Bride, Groom, UniversalCategory, UniversalSubcategory, UniversalSubSubcategory,
-    AdditionalServiceCategory, AdditionalServiceSubcategory
+    AdditionalServiceCategory, AdditionalServiceSubcategory, Payment, Item, Category
 )
-from django.shortcuts import render, get_object_or_404, redirect
 from .forms import AdditionalServiceCategoryForm, AdditionalServiceSubcategoryForm
 from rest_framework import viewsets
 from .serializers import (
     CategorySerializer, UniversalCategorySerializer, UniversalSubcategorySerializer, UniversalSubSubcategorySerializer,
-    BrideSerializer, GroomSerializer, AdditionalServiceCategorySerializer, AdditionalServiceSubcategorySerializer
+    BrideSerializer, GroomSerializer, AdditionalServiceCategorySerializer, AdditionalServiceSubcategorySerializer, ItemSerializer
 )
-from .models import Category
+from django.conf import settings
+import requests
+
+# Payme API URL
+PAYME_API_URL = "https://checkout.paycom.uz/api"
+
+
+# Добавлен CategoryViewSet
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 # Home view
 def home(request):
@@ -112,12 +122,52 @@ def add_additional_service_subcategory(request):
 
     return render(request, 'you_and_me/add_additional_service_subcategory.html', {'form': form})
 
+# View to initiate payment with Payme
+def initiate_payment(request):
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        if not amount:
+            return render(request, 'you_and_me/initiate_payment.html', {'error': 'Amount is required.'})
+
+        # Create a payment object with status 'pending'
+        payment = Payment.objects.create(amount=amount, status='pending')
+
+        headers = {
+            'X-Auth': settings.PAYME_KEY_ID,
+            'Content-Type': 'application/json',
+        }
+
+        payload = {
+            'method': 'CreateTransaction',
+            'params': {
+                'amount': int(float(amount) * 100),  # в тийинах
+                'account': {
+                    'order_id': payment.id
+                }
+            }
+        }
+
+        response = requests.post(PAYME_API_URL, json=payload, headers=headers)
+
+        if response.status_code == 200:
+            data = response.json()
+            if 'result' in data:
+                transaction_id = data['result']['transaction']
+                payment.transaction_id = transaction_id
+                payment.status = 'created'
+                payment.save()
+                return redirect(data['result']['pay_url'])
+            else:
+                # Handle error from Payme API
+                payment.status = 'failed'
+                payment.save()
+                return render(request, 'you_and_me/payment_failed.html', {'error': data.get('error', {}).get('message', 'Unknown error occurred.')})
+        else:
+            return render(request, 'you_and_me/payment_failed.html', {'error': 'Failed to initiate payment. Please try again later.'})
+
+    return render(request, 'you_and_me/initiate_payment.html')
+
 # ViewSets for API
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-
 class UniversalCategoryViewSet(viewsets.ModelViewSet):
     queryset = UniversalCategory.objects.all()
     serializer_class = UniversalCategorySerializer
@@ -151,3 +201,8 @@ class AdditionalServiceCategoryViewSet(viewsets.ModelViewSet):
 class AdditionalServiceSubcategoryViewSet(viewsets.ModelViewSet):
     queryset = AdditionalServiceSubcategory.objects.all()
     serializer_class = AdditionalServiceSubcategorySerializer
+
+
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
