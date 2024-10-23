@@ -112,7 +112,7 @@ class AdditionalServiceCategorySerializer(serializers.ModelSerializer):
         model = AdditionalServiceCategory
         fields = '__all__'
 
-
+0
 class AdditionalServiceSubcategorySerializer(serializers.ModelSerializer):
     category = serializers.PrimaryKeyRelatedField(queryset=AdditionalServiceCategory.objects.all())
 

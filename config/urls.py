@@ -15,7 +15,7 @@ router.register(r'grooms', you_and_me_views.GroomViewSet)
 router.register(r'additional-service-categories', you_and_me_views.AdditionalServiceCategoryViewSet)
 router.register(r'additional-service-subcategories', you_and_me_views.AdditionalServiceSubcategoryViewSet)
 router.register(r'items', you_and_me_views.ItemViewSet)
-
+#
 schema_view = get_schema_view(
     openapi.Info(
         title="You And Me API",

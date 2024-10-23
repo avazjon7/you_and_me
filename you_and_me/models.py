@@ -189,14 +189,19 @@ class AdditionalServiceSubcategory(models.Model):
 
 
 class Payment(models.Model):
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('created', 'Created'),
+        ('failed', 'Failed'),
+        ('completed', 'Completed'),
+    )
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=20)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     transaction_id = models.CharField(max_length=100, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Payment {self.id} - {self.status}"
+        return f"Payment #{self.id} - {self.status}"
 
 # Updated Item model to fit with existing related models
 class Item(models.Model):

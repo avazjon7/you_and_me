@@ -10,16 +10,6 @@ from .models import (
 )
 
 # Register models with inlines for subcategories in admin
-class UniversalSubcategoryInline(admin.TabularInline):
-    model = UniversalSubcategory
-    extra = 1
-
-
-class UniversalSubSubcategoryInline(admin.TabularInline):
-    model = UniversalSubSubcategory
-    extra = 1
-
-
 class SarpoInline(admin.TabularInline):
     model = Sarpo
     extra = 1
@@ -33,6 +23,13 @@ class StylistInline(admin.TabularInline):
 class WeddingDressInline(admin.TabularInline):
     model = WeddingDress
     extra = 1
+
+
+class BrideAdmin(ImportExportModelAdmin):
+    inlines = [SarpoInline, StylistInline, WeddingDressInline]
+    list_display = ['name']
+    search_fields = ['name']
+    formats = ImportExportModelAdmin.formats  # Добавляем возможность экспорта в XLSX
 
 
 class GroomEssentialsInline(admin.TabularInline):
@@ -50,19 +47,16 @@ class GroomAttireInline(admin.TabularInline):
     extra = 1
 
 
-class AdditionalServiceSubcategoryInline(admin.TabularInline):
-    model = AdditionalServiceSubcategory
-    extra = 1
-
-
-# Registering models in separate admin classes for better organization
-class CategoryAdmin(ImportExportModelAdmin):
+class GroomAdmin(ImportExportModelAdmin):
+    inlines = [GroomEssentialsInline, GroomStylistInline, GroomAttireInline]
     list_display = ['name']
     search_fields = ['name']
-    def get_export_formats(self):
-        formats = super().get_export_formats()
-        formats.append(XLSX)
-        return formats  # Добавляем возможность экспорта в XLSX
+    formats = ImportExportModelAdmin.formats  # Добавляем возможность экспорта в XLSX
+
+
+class UniversalSubcategoryInline(admin.TabularInline):
+    model = UniversalSubcategory
+    extra = 1
 
 
 class UniversalCategoryAdmin(ImportExportModelAdmin):
@@ -73,6 +67,11 @@ class UniversalCategoryAdmin(ImportExportModelAdmin):
         formats = super().get_export_formats()
         formats.append(XLSX)
         return formats  # Добавляем возможность экспорта в XLSX
+
+
+class UniversalSubSubcategoryInline(admin.TabularInline):
+    model = UniversalSubSubcategory
+    extra = 1
 
 
 class UniversalSubcategoryAdmin(ImportExportModelAdmin):
@@ -86,43 +85,8 @@ class UniversalSubcategoryAdmin(ImportExportModelAdmin):
         return formats  # Добавляем возможность экспорта в XLSX
 
 
-class BrideAdmin(ImportExportModelAdmin):
-    inlines = [SarpoInline, StylistInline, WeddingDressInline]
-    list_display = ['name']
-    search_fields = ['name']
-    def get_export_formats(self):
-        formats = super().get_export_formats()
-        formats.append(XLSX)
-        return formats  # Добавляем возможность экспорта в XLSX
-
-
-class GroomAdmin(ImportExportModelAdmin):
-    inlines = [GroomEssentialsInline, GroomStylistInline, GroomAttireInline]
-    list_display = ['name']
-    search_fields = ['name']
-    def get_export_formats(self):
-        formats = super().get_export_formats()
-        formats.append(XLSX)
-        return formats  # Добавляем возможность экспорта в XLSX
-
-
-class AdditionalServiceCategoryAdmin(ImportExportModelAdmin):
-    inlines = [AdditionalServiceSubcategoryInline]
-    list_display = ['name']
-    search_fields = ['name']
-    def get_export_formats(self):
-        formats = super().get_export_formats()
-        formats.append(XLSX)
-        return formats  # Добавляем возможность экспорта в XLSX
-
-
-# Registering models in Admin
-admin.site.register(Category, CategoryAdmin)
-admin.site.register(UniversalCategory, UniversalCategoryAdmin)
-admin.site.register(UniversalSubcategory, UniversalSubcategoryAdmin)
-admin.site.register(UniversalSubSubcategory, ImportExportModelAdmin)
+# Registering models
 admin.site.register(Bride, BrideAdmin)
 admin.site.register(Groom, GroomAdmin)
-admin.site.register(AdditionalServiceCategory, AdditionalServiceCategoryAdmin)
-admin.site.register(AdditionalServiceSubcategory, ImportExportModelAdmin)
+admin.site.register(UniversalCategory, UniversalCategoryAdmin)
 admin.site.unregister(Group)

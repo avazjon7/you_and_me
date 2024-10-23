@@ -1,25 +1,22 @@
-from django.shortcuts import render, get_object_or_404, redirect
 from .models import (
     Bride, Groom, UniversalCategory, UniversalSubcategory, UniversalSubSubcategory,
-    AdditionalServiceCategory, AdditionalServiceSubcategory, Payment, Item, Category
+    AdditionalServiceCategory, AdditionalServiceSubcategory, Payment, Item
 )
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import AdditionalServiceCategoryForm, AdditionalServiceSubcategoryForm
 from rest_framework import viewsets
 from .serializers import (
     CategorySerializer, UniversalCategorySerializer, UniversalSubcategorySerializer, UniversalSubSubcategorySerializer,
-    BrideSerializer, GroomSerializer, AdditionalServiceCategorySerializer, AdditionalServiceSubcategorySerializer, ItemSerializer
+    BrideSerializer, GroomSerializer, AdditionalServiceCategorySerializer, AdditionalServiceSubcategorySerializer,
+    ItemSerializer
 )
+from .models import Category
 from django.conf import settings
 import requests
 
 # Payme API URL
 PAYME_API_URL = "https://checkout.paycom.uz/api"
 
-
-# Добавлен CategoryViewSet
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
 
 # Home view
 def home(request):
@@ -32,6 +29,7 @@ def home(request):
         'grooms': grooms,
         'universal_categories': universal_categories
     })
+
 
 # View for displaying bride details
 def bride_detail(request, bride_id):
@@ -47,6 +45,7 @@ def bride_detail(request, bride_id):
         'wedding_dresses': wedding_dresses,
     })
 
+
 # View for displaying groom details
 def groom_detail(request, groom_id):
     groom = get_object_or_404(Groom, id=groom_id)
@@ -61,6 +60,7 @@ def groom_detail(request, groom_id):
         'attires': attires,
     })
 
+
 # View for universal category details
 def universal_category_detail(request, category_id):
     category = get_object_or_404(UniversalCategory, id=category_id)
@@ -70,6 +70,7 @@ def universal_category_detail(request, category_id):
         'category': category,
         'subcategories': subcategories,
     })
+
 
 # View for universal subcategory details
 def universal_subcategory_detail(request, subcategory_id):
@@ -81,12 +82,14 @@ def universal_subcategory_detail(request, subcategory_id):
         'sub_subcategories': sub_subcategories,
     })
 
+
 # View for displaying all additional services
 def additional_services(request):
     additional_services = AdditionalServiceCategory.objects.all()
     return render(request, 'you_and_me/additional_services.html', {
         'additional_services': additional_services,
     })
+
 
 # View for displaying additional service details
 def additional_service_detail(request, category_id):
@@ -98,6 +101,7 @@ def additional_service_detail(request, category_id):
         'subcategories': subcategories,
     })
 
+
 # View to add a new additional service category
 def add_additional_service_category(request):
     if request.method == 'POST':
@@ -105,10 +109,11 @@ def add_additional_service_category(request):
         if form.is_valid():
             form.save()
             return redirect('additional_services')
-    else:
+    else:  # GET request
         form = AdditionalServiceCategoryForm()
 
     return render(request, 'you_and_me/add_additional_service_category.html', {'form': form})
+
 
 # View to add a new additional service subcategory
 def add_additional_service_subcategory(request):
@@ -122,7 +127,19 @@ def add_additional_service_subcategory(request):
 
     return render(request, 'you_and_me/add_additional_service_subcategory.html', {'form': form})
 
+
 # View to initiate payment with Payme
+
+# def payme_callback(request):
+#     if request.method == 'POST':
+#         data = request.POST
+#         transaction_id = data.get('account[order_id]')
+#         payment = Payment.objects.get(transaction_id=transaction_id)
+#         payment.status = 'completed'
+#         payment.save()
+#         return render(request, 'you_and_me/payment_completed.html')
+#     return render(request, 'you_and_me/payment_failed.html', {'error': 'Invalid request.'})
+
 def initiate_payment(request):
     if request.method == 'POST':
         amount = request.POST.get('amount')
@@ -167,7 +184,13 @@ def initiate_payment(request):
 
     return render(request, 'you_and_me/initiate_payment.html')
 
+
 # ViewSets for API
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
 class UniversalCategoryViewSet(viewsets.ModelViewSet):
     queryset = UniversalCategory.objects.all()
     serializer_class = UniversalCategorySerializer
@@ -193,6 +216,11 @@ class GroomViewSet(viewsets.ModelViewSet):
     serializer_class = GroomSerializer
 
 
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
+
+
 class AdditionalServiceCategoryViewSet(viewsets.ModelViewSet):
     queryset = AdditionalServiceCategory.objects.all()
     serializer_class = AdditionalServiceCategorySerializer
@@ -201,8 +229,3 @@ class AdditionalServiceCategoryViewSet(viewsets.ModelViewSet):
 class AdditionalServiceSubcategoryViewSet(viewsets.ModelViewSet):
     queryset = AdditionalServiceSubcategory.objects.all()
     serializer_class = AdditionalServiceSubcategorySerializer
-
-
-class ItemViewSet(viewsets.ModelViewSet):
-    queryset = Item.objects.all()
-    serializer_class = ItemSerializer

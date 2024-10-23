@@ -37,10 +37,9 @@ urlpatterns = [
 
 
 
+
     # URL для обработки запросов от Payme
-    path('payme/initiate/', views.initiate_payment, name='initiate_payment'),
-
-
-
+    # path('payme/initiate/', views.initiate_payment, name='initiate_payment'),
+    # path('payme/callback/', views.payme_callback, name='payme_callback'),
 
 ]
